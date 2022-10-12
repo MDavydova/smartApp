@@ -8,22 +8,20 @@ import Rank from './components/Rank/Rank'
 import Signin from "./components/Signin/Signin";
 import Register from "./components/Register/Register";
 import ParticlesBg from 'particles-bg';
-
 const initialState = {
-        input: '',
-            imageUrl: '',
-        box: {},
-        route: 'signin',
-            isSignedIn: false,
-        user: {
+    input: '',
+    imageUrl: '',
+    box: {},
+    route: 'signin',
+    isSignedIn: false,
+    user: {
         id: '',
-            name: '',
-            email: '',
-            entries: 0,
-            joined: ''
+        name: '',
+        email: '',
+        entries: 0,
+        joined: ''
     }
 }
-
 
 class App extends Component {
     constructor() {
@@ -46,6 +44,7 @@ class App extends Component {
         const image = document.getElementById('inputimage');
         const width = Number(image.width);
         const height = Number(image.height);
+
         return {
             leftCol: clarifaiFace.left_col * width,
             topRow: clarifaiFace.top_row * height,
@@ -64,28 +63,29 @@ class App extends Component {
 
     onButtonSubmit = () => {
         this.setState({imageUrl: this.state.input});
-            fetch('http://localhost:3000/imageurl', {
-                method: 'post',
-                headers: {'Content-Type': 'application-json'},
-                body: JSON.stringify({
-                    input: this.state.input
-                })
+        fetch('http://localhost:3000/imageurl', {
+            method: 'post',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                input: this.state.input
             })
+        })
             .then(response => response.json())
             .then(response => {
                 if (response) {
                     fetch('http://localhost:3000/image', {
                         method: 'put',
-                        headers: {'Content-Type': 'application-json'},
+                        headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify({
-                            id: this.state.user.id,
+                            id: this.state.user.id
                         })
                     })
                         .then(response => response.json())
                         .then(count => {
-                            this.setState(Object.assign(this.state.user, {entries: count }));
+                            this.setState(Object.assign(this.state.user, { entries: count}))
                         })
-                        .catch(console.log);
+                        .catch(console.log)
+
                 }
                 this.displayFaceBox(this.calculateFaceLocation(response))
             })
@@ -94,7 +94,7 @@ class App extends Component {
 
     onRouteChange = (route) => {
         if (route === 'signout') {
-            this.setState({initialState})
+            this.setState(initialState)
         } else if (route === 'home') {
             this.setState({isSignedIn: true})
         }
@@ -103,10 +103,9 @@ class App extends Component {
 
     render() {
         const { isSignedIn, imageUrl, route, box } = this.state;
-
         return (
             <div className="App">
-                <ParticlesBg type="fountain" bg={true} />
+                <ParticlesBg type="circle" bg={true} />
                 <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
                 { route === 'home'
                     ? <div>

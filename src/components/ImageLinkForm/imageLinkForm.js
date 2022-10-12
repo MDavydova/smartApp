@@ -6,11 +6,12 @@ const ImageLinkForm = ({onInputChange, onButtonSubmit}) => {
         <div>
             <p className="f3">
                 {'This Magic Brain will detect faces in your pictures'}
+                {'Please choose a non-copyrighted, JPG image'}
             </p>
             <div className='center'>
                 <div className='center pa4 br3 shadow-5 form'>
-                    <input className="f4 pa2 w-70 center" type="text" onClick={onButtonSubmit} onChange={onInputChange} />
-                    <button className="w-30 grow f4 link pv2 dib white bg-light-purple">Detect</button>
+                    <input className="f4 pa2 w-70 center" type="text" onChange={onInputChange} />
+                    <button className="w-30 grow f4 link pv2 dib white bg-light-purple" onClick={onButtonSubmit}>Detect</button>
                 </div>
             </div>
         </div>
